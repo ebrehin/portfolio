@@ -1,0 +1,15 @@
+[
+    {
+      "title": "Mon projet génial",
+      "description": "Une description rapide de ce projet incroyable.",
+      "link": "https://github.com/mon-projet",
+      "image": "/images/projet1.png"
+    },
+    {
+      "title": "Un autre projet",
+      "description": "Une autre belle création.",
+      "link": "https://github.com/autre-projet",
+      "image": "/images/projet2.png"
+    }
+  ]
+  
