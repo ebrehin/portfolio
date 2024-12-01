@@ -1,15 +1,18 @@
 import React from 'react';
 
-function Header() {
+function Header({ onAboutClick }) {
+  const handleAboutClick = (e) => {
+    e.preventDefault(); // Empêche le comportement par défaut
+    if (onAboutClick) onAboutClick(); // Déclenche la logique d'animation
+  };
+
   return (
-    <header className="bg-gray-800 text-white py-4">
-      <nav className="container mx-auto flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Ton Nom</h1>
-        <ul className="flex space-x-4">
-          <li><a href="#about" className="hover:text-blue-400">À propos</a></li>
-          <li><a href="#projects" className="hover:text-blue-400">Projets</a></li>
-          <li><a href="#contact" className="hover:text-blue-400">Contact</a></li>
-        </ul>
+    <header style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 20px', backgroundColor: '#222', color: '#fff' }}>
+      <h1>Mon Portfolio</h1>
+      <nav>
+        <a href="/about" onClick={handleAboutClick} style={{ margin: '0 10px', color: '#fff', textDecoration: 'none' }}>
+          About
+        </a>
       </nav>
     </header>
   );
