@@ -1,14 +1,15 @@
 import React, { useRef, useEffect } from 'react';
 import { Canvas, useFrame, extend } from '@react-three/fiber';
-import { useGLTF, OrbitControls } from '@react-three/drei';
+import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
+import "../styles/components.css";
 
-extend({ OrbitControls }); // Assure l'extension pour OrbitControls
 
-function LaptopScene({ onComplete, onTransition }) {
+function LaptopScene() {
   const { scene, animations } = useGLTF('/models/laptop.glb');
   const mixer = useRef(new THREE.AnimationMixer(scene));
   const actions = useRef({});
+  const laptopRef = useRef();
 
   useEffect(() => {
     // Charger et mapper toutes les animations
@@ -31,7 +32,7 @@ function LaptopScene({ onComplete, onTransition }) {
         if (idleAction) {
           idleAction.reset().play();
         }
-        if (onComplete) onComplete(); // Notifie que l'animation "Intro" est terminée
+        console.log('Intro done')
       }
     };
 
@@ -40,13 +41,13 @@ function LaptopScene({ onComplete, onTransition }) {
     return () => {
       mixer.current.removeEventListener('finished', handleFinished);
     };
-  }, [animations, onComplete]);
+  }, [animations]);
 
   useFrame((state, delta) => {
     mixer.current.update(delta);
   });
 
-  // Méthode pour lancer la transition
+  /* Méthode pour lancer la transition
   const triggerTransition = async () => {
     if (actions.current['Idle']) {
       actions.current['Idle'].stop();
@@ -72,23 +73,19 @@ function LaptopScene({ onComplete, onTransition }) {
       onTransition(); // Notifie la transition
     }
   };
+  */
 
   return <primitive object={scene} />;
 }
 
-export default function ThreeScene({ onComplete, onTransition, onTriggerTransition }) {
+export default function ThreeScene() {
   return (
     <>
-      <Canvas camera={{ position: [0, 2, 5], fov: 50 }}>
+      <Canvas camera={{ position: [4, 0, 8], fov: 50 }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
-        <LaptopScene onComplete={onComplete} onTransition={onTransition} />
-        <OrbitControls />
+        <LaptopScene />
       </Canvas>
-      {/* Ajout d'un bouton HTML en dehors du Canvas */}
-      <div style={{ position: 'absolute', top: 10, right: 10 }}>
-        <button onClick={onTriggerTransition}>Trigger Transition</button>
-      </div>
     </>
   );
 }
