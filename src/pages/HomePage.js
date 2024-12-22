@@ -7,7 +7,6 @@ import ThreeScene from '../components/ThreeScene';
 export default function HomePage() {
   return (
     <>
-      <Header/>
       <ThreeScene />
       <ScrollText />
       <Footer />
