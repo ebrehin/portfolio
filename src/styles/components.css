@@ -12,7 +12,7 @@ header {
     text-decoration: 'none';
 }
 
-/* Mise à jour du conteneur principal */
+/* Mise à jour du conteneur principal (scroll) */
 .scroll-container {
     position: relative;
     min-height: 200vh; /* Hauteur pour permettre le scroll */
