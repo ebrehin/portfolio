@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import ScrollText from '../components/ScrollText';
+import React from 'react';
 import ThreeScene from '../components/ThreeScene';
+import ScrollText from '../components/ScrollText';
+import Footer from '../components/Footer';
 
-export default function HomePage() {
+const HomePage = () => {
   return (
-    <>
-      <ThreeScene />
+    <div className="scroll-container">
+      <div className="scene-container">
+        <ThreeScene />
+      </div>
       <ScrollText />
-      <Footer />
-    </>
+      <div style={{ height: '100vh' }} /> {/* Espace pour le scroll initial */}
+      <div className="footer-wrapper">
+        <Footer />
+      </div>
+    </div>
   );
-}
+};
+
+export default HomePage;

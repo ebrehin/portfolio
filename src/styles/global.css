@@ -1,21 +1,37 @@
-html, body, #root {
-    position: fixed;
-    top: 0;
-    height: 100vh;
-    width: 100%;
-    overflow: hidden;
-}
-
-header {
-    display: 'flex';
-    justify-content: 'space-between';
-    padding: '10px 20px';
-    background-color: '#222';
-    color: '#fff'; 
-}
-
-#linkSkills {
-    margin: '0 10px';
-    color: '#fff';
-    text-decoration: 'none';
-}
+:root {
+    /* Variables de couleur */
+    --primary-color: #ffffff;
+    --background-color: #000000;
+    --text-color: #ffffff;
+  
+    /* Variables de typographie */
+    --font-primary: system-ui, -apple-system, sans-serif;
+    --font-size-base: 16px;
+    --line-height-base: 1.5;
+  
+    /* Variables d'animation */
+    --transition-speed: 0.3s;
+    --transition-timing: ease-out;
+  }
+  
+  /* Reset de base */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+  }
+  
+  /* Classe utilitaire pour le conteneur de défilement */
+  .scroll-container {
+    min-height: 200vh;
+    position: relative;
+  }

@@ -15,6 +15,9 @@ export default function ThreeScene() {
   const laptopRef = useRef(null);
   const rotationSpeed = 0.5;
   const timeForRotation = 2;
+  const targetRotation = useRef(0);
+  const destinationRef = useRef(null);
+  const remainingRotation = useRef(0);
   
   const handleNavigation = (destination) => {
     if (!mixer.current || !actions.current) return;
@@ -24,18 +27,23 @@ export default function ThreeScene() {
       action.stop();
     });
 
-    // Arrêter la rotation idle
+    
+    // Arrêter la rotation idle et commencer la rotation finale
     isIdle.current = false;
-
-    //Repositionner l'ordi proprement
     finishIdle.current = true;
-    setTimeout(() => {
-      console.log("attente de 10 seconde");
-    }, 10000);    
+    destinationRef.current = destination;
+    
+    // Calculer la rotation restante pour compléter le tour    
+    const currentRotation = laptopRef.current.rotation.y;
+    const fullRotations = Math.ceil(currentRotation / (2 * Math.PI));
+    targetRotation.current = fullRotations * 2 * Math.PI;
+    remainingRotation.current = targetRotation.current - currentRotation;
+  };
 
-    // Jouer les animations de transition et naviguer
+  const startTransitionAnimations = () => {
     const transitionAction = actions.current['transition'];
     const cylinderAction = actions.current['Cylinder action'];
+    
     if (transitionAction && cylinderAction) {
       transitionAction.setLoop(THREE.LoopOnce);
       transitionAction.clampWhenFinished = true;
@@ -48,27 +56,23 @@ export default function ThreeScene() {
         }
         if (e.action === cylinderAction) {
           mixer.current.removeEventListener('finished', handleFinished);
-          navigate(destination);
+          navigate(destinationRef.current);
         }
       };
 
       mixer.current.addEventListener('finished', handleFinished);
       transitionAction.play();
     } else {
-      navigate(destination);
+      navigate(destinationRef.current);
     }
   };
 
   function LaptopScene() {
-    
-    // Animation continue du laptop
     useEffect(() => {
-      // Chargement des animations
       animations.forEach((clip) => {
         actions.current[clip.name] = mixer.current.clipAction(clip);
       });
-  
-      // Animation d'introduction
+      
       laptopRef.current.rotation.y = 0;
       const introAction = actions.current['Intro'];
       if (introAction) {
@@ -84,22 +88,31 @@ export default function ThreeScene() {
       };
   
       mixer.current.addEventListener('finished', handleFinished);
-      console.log('Scene object:', laptopScene);
   
       return () => {
         mixer.current.removeEventListener('finished', handleFinished);
       };
     }, [animations]);
 
-    // Animation par frame
     useFrame((state, delta) => {
       mixer.current.update(delta);
-
-      console.log("le :",isIdle.current, laptopRef.current.rotation.y);
-      if (finishIdle.current && laptopRef.current && laptopRef.current.rotation) {
-        laptopRef.current.rotation.y += (2 * Math.PI) / timeForRotation * delta;
+      //console.log("le :",isIdle.current, laptopRef.current.rotation.x, laptopRef.current.rotation.y, laptopRef.current.rotation.z);
+      if (finishIdle.current && laptopRef.current) {
+        // Calculer le pas de rotation pour ce frame
+        const rotationStep = (2 * Math.PI) / timeForRotation * delta;
+        
+        // Si la rotation restante est plus petite que le pas, on termine
+        if (remainingRotation.current <= rotationStep) {
+          laptopRef.current.rotation.y += remainingRotation.current;
+          finishIdle.current = false;
+          startTransitionAnimations();
+        } else {
+          // Sinon, on continue la rotation
+          laptopRef.current.rotation.y += rotationStep;
+          remainingRotation.current -= rotationStep;
+        }
       }
-      else if (isIdle.current && laptopRef.current && laptopRef.current.rotation) {
+      else if (isIdle.current && laptopRef.current) {
         laptopRef.current.rotation.y += delta * rotationSpeed;
       }
     });
