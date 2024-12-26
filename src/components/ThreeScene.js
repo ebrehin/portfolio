@@ -7,35 +7,59 @@ import "../styles/components.css";
 
 export default function ThreeScene() {
   const navigate = useNavigate();
+  const { scene: laptopScene, animations } = useGLTF('/models/laptop.glb');
+  const mixer = useRef(new THREE.AnimationMixer(laptopScene));
+  const actions = useRef({});
+  const isIdle = useRef(false);
+  const finishIdle = useRef(false);
   const laptopRef = useRef(null);
+  const rotationSpeed = 0.5;
+  const timeForRotation = 2;
   
   const handleNavigation = (destination) => {
-    const animationDuration = 1000;
-    const startTime = Date.now();
+    if (!mixer.current || !actions.current) return;
 
-    const animate = () => {
-      const currentTime = Date.now();
-      const progress = (currentTime - startTime) / animationDuration;
+    // Arrêter toutes les animations en cours
+    Object.values(actions.current).forEach(action => {
+      action.stop();
+    });
 
-      if (progress < 1) {
-        if (laptopRef.current) {
-          laptopRef.current.rotation.y += 0.1;
+    // Arrêter la rotation idle
+    isIdle.current = false;
+
+    //Repositionner l'ordi proprement
+    finishIdle.current = true;
+    setTimeout(() => {
+      console.log("attente de 10 seconde");
+    }, 10000);    
+
+    // Jouer les animations de transition et naviguer
+    const transitionAction = actions.current['transition'];
+    const cylinderAction = actions.current['Cylinder action'];
+    if (transitionAction && cylinderAction) {
+      transitionAction.setLoop(THREE.LoopOnce);
+      transitionAction.clampWhenFinished = true;
+      cylinderAction.setLoop(THREE.LoopOnce);
+      cylinderAction.clampWhenFinished = true;
+      
+      const handleFinished = (e) => {
+        if (e.action === transitionAction) {
+          cylinderAction.play();
         }
-        requestAnimationFrame(animate);
-      } else {
-        navigate(destination);
-      }
-    };
+        if (e.action === cylinderAction) {
+          mixer.current.removeEventListener('finished', handleFinished);
+          navigate(destination);
+        }
+      };
 
-    animate();
+      mixer.current.addEventListener('finished', handleFinished);
+      transitionAction.play();
+    } else {
+      navigate(destination);
+    }
   };
 
   function LaptopScene() {
-    const { scene: laptopScene, animations } = useGLTF('/models/laptop.glb');
-    const mixer = useRef(new THREE.AnimationMixer(laptopScene));
-    const actions = useRef({});
-    const laptopRef = useRef(null);
-    const isIdle = useRef(false);
     
     // Animation continue du laptop
     useEffect(() => {
@@ -45,7 +69,7 @@ export default function ThreeScene() {
       });
   
       // Animation d'introduction
-      laptopRef.current.rotation.y = 120;
+      laptopRef.current.rotation.y = 0;
       const introAction = actions.current['Intro'];
       if (introAction) {
         introAction.setLoop(THREE.LoopOnce);
@@ -70,9 +94,13 @@ export default function ThreeScene() {
     // Animation par frame
     useFrame((state, delta) => {
       mixer.current.update(delta);
-    
-      if (isIdle.current && laptopRef.current && laptopRef.current.rotation) {
-        laptopRef.current.rotation.y += delta * 0.5;
+
+      console.log("le :",isIdle.current, laptopRef.current.rotation.y);
+      if (finishIdle.current && laptopRef.current && laptopRef.current.rotation) {
+        laptopRef.current.rotation.y += (2 * Math.PI) / timeForRotation * delta;
+      }
+      else if (isIdle.current && laptopRef.current && laptopRef.current.rotation) {
+        laptopRef.current.rotation.y += delta * rotationSpeed;
       }
     });
 
