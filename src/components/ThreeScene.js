@@ -14,7 +14,6 @@ export default function ThreeScene() {
   const finishIdle = useRef(false);
   const transitioning = useRef(false);
   const laptopRef = useRef(null);
-  const cameraRef = useRef(null);
   const initialRotation = THREE.MathUtils.degToRad(90);
   const rotationSpeed = 0.5;
   const timeForRotation = 2;
@@ -23,14 +22,7 @@ export default function ThreeScene() {
   const remainingRotation = useRef(0);
   
   const handleNavigation = (destination) => {
-    if (!mixer.current || !actions.current) return;
-
-    cameraRef.current.position.set(6,0,5);
-    cameraRef.current.lookAt(0,0,0);
-
-    cameraRef.current.fov = 75;
-    cameraRef.current.updateProjectionMatrix();
-    
+    if (!mixer.current || !actions.current) return;   
 
     // Arrêter toutes les animations en cours
     Object.values(actions.current).forEach(action => {
@@ -163,13 +155,6 @@ export default function ThreeScene() {
         </nav>
       </header>
       <Canvas>
-        <perspectiveCamera
-          ref={cameraRef}
-          position={[6, 0, 5]} // Default position
-          fov={75} // Default field of view
-          near={0.1}
-          far={1000}
-        />
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <LaptopScene />
