@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Canvas, useFrame} from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import { useNavigate } from 'react-router-dom';
 import * as THREE from 'three';
@@ -12,8 +12,10 @@ export default function ThreeScene() {
   const actions = useRef({});
   const isIdle = useRef(false);
   const finishIdle = useRef(false);
+  const transitioning = useRef(false);
   const laptopRef = useRef(null);
-  const initialRotation = THREE.MathUtils.degToRad(30);
+  const cameraRef = useRef(null);
+  const initialRotation = THREE.MathUtils.degToRad(90);
   const rotationSpeed = 0.5;
   const timeForRotation = 2;
   const targetRotation = useRef(0);
@@ -22,6 +24,13 @@ export default function ThreeScene() {
   
   const handleNavigation = (destination) => {
     if (!mixer.current || !actions.current) return;
+
+    cameraRef.current.position.set(6,0,5);
+    cameraRef.current.lookAt(0,0,0);
+
+    cameraRef.current.fov = 75;
+    cameraRef.current.updateProjectionMatrix();
+    
 
     // Arrêter toutes les animations en cours
     Object.values(actions.current).forEach(action => {
@@ -60,6 +69,7 @@ export default function ThreeScene() {
       const handleFinished = (e) => {
         if (e.action === transitionAction) {
           cylinderAction.play();
+          transitioning.current = true;
         }
         if (e.action === cylinderAction) {
           mixer.current.removeEventListener('finished', handleFinished);
@@ -70,6 +80,9 @@ export default function ThreeScene() {
       mixer.current.addEventListener('finished', handleFinished);
       IdleAction.stop();
       transitionAction.play();
+      laptopScene.traverse((child) => {
+        console.log(child.name); // Affiche tous les noms d'éléments
+      });
     } else {
       navigate(destinationRef.current);
     }
@@ -107,6 +120,15 @@ export default function ThreeScene() {
     }, [animations]);
 
     useFrame((state, delta) => {
+      if (transitioning.current){
+        state.camera.position.lerp(new THREE.Vector3(-2, 1.2, -2), 0.03);
+      }
+      else {
+        state.camera.lookAt(laptopRef.current.position);
+        state.camera.position.lerp(new THREE.Vector3(6, 2, 0), 0.05);
+        state.camera.fov = THREE.MathUtils.lerp(state.camera.fov, 75, 0.05);
+      }
+
       mixer.current.update(delta);
       //console.log("le :",isIdle.current, laptopRef.current.rotation.x, laptopRef.current.rotation.y, laptopRef.current.rotation.z);
       if (finishIdle.current && laptopRef.current) {
@@ -134,18 +156,20 @@ export default function ThreeScene() {
 
   return (
     <>
-      <header style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 20px', backgroundColor: '#222', color: '#fff' }}>
+      <header>
         <h1>Mon Portfolio</h1>
         <nav>
-          <button 
-            onClick={() => handleNavigation('/skills')} 
-            style={{ margin: '0 10px', color: '#fff', textDecoration: 'none', backgroundColor: 'none'}}
-          >
-            skills
-          </button>
+          <button id='linkSkills' onClick={() => handleNavigation('/skills')}>skills</button>
         </nav>
       </header>
-      <Canvas camera={{ position: [6, 0, 8], fov: 50 }}>
+      <Canvas>
+        <perspectiveCamera
+          ref={cameraRef}
+          position={[6, 0, 5]} // Default position
+          fov={75} // Default field of view
+          near={0.1}
+          far={1000}
+        />
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <LaptopScene />

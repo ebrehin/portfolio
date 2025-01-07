@@ -10,7 +10,6 @@ const HomePage = () => {
         <ThreeScene />
       </div>
       <ScrollText />
-      <div style={{ height: '100vh' }} /> {/* Espace pour le scroll initial */}
       <div className="footer-wrapper">
         <Footer />
       </div>
