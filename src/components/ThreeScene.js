@@ -116,8 +116,8 @@ export default function ThreeScene() {
         state.camera.position.lerp(new THREE.Vector3(-2, 1.2, -2), 0.03);
       }
       else {
-        state.camera.lookAt(laptopRef.current.position);
-        state.camera.position.lerp(new THREE.Vector3(6.5, 2, 0), 0.05);
+        state.camera.lookAt(laptopRef.current.position.x, laptopRef.current.position.y + 1, laptopRef.current.position.z);
+        state.camera.position.lerp(new THREE.Vector3(6.5, 3, 0), 0.05);
         state.camera.fov = THREE.MathUtils.lerp(state.camera.fov, 75, 0.05);
       }
 
