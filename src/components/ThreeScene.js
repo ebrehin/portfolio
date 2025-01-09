@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import * as THREE from 'three';
 import "../styles/components.css";
 
@@ -16,7 +16,7 @@ export default function ThreeScene() {
   const laptopRef = useRef(null);
   const initialRotation = THREE.MathUtils.degToRad(90);
   const rotationSpeed = 0.5;
-  const timeForRotation = 2;
+  const timeForRotation = 1.5;
   const targetRotation = useRef(0);
   const destinationRef = useRef(null);
   const remainingRotation = useRef(0);
@@ -149,9 +149,14 @@ export default function ThreeScene() {
   return (
     <>
       <header>
-        <h1>Mon Portfolio</h1>
+        <NavLink to="/">
+          <h1>Mon Portfolio</h1>
+        </NavLink>
         <nav>
-          <button id='linkSkills' onClick={() => handleNavigation('/skills')}>skills</button>
+          <NavLink to="/">
+            <button class="links">Accueil</button>
+          </NavLink>
+          <button class="links" onClick={() => handleNavigation('/skills')}>skills</button>
         </nav>
       </header>
       <Canvas>

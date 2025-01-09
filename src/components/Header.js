@@ -10,7 +10,10 @@ function Header() {
         <h1>Mon Portfolio</h1>
       </NavLink>
       <nav>
-        <button id='linkSkills' href="/skills">skills</button>
+        <NavLink to="/">
+          <button class="links">Accueil</button>
+        </NavLink>
+        <button class='links' href="/skills">Compétences</button>
       </nav>
     </header>
   );
