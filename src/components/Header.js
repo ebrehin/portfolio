@@ -7,7 +7,7 @@ function Header() {
   return (
     <header>
       <NavLink to="/">
-        <h1>Mon Portfolio</h1>
+        <h1>Ethan Bréhin</h1>
       </NavLink>
       <nav>
         <NavLink to="/">
