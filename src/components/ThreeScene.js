@@ -70,8 +70,8 @@ export default function ThreeScene() {
       };
 
       mixer.current.addEventListener('finished', handleFinished);
-      IdleAction.stop();
       transitionAction.play();
+      IdleAction.stop();
       laptopScene.traverse((child) => {
         console.log(child.name); // Affiche tous les noms d'éléments
       });
