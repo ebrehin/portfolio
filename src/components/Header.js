@@ -1,15 +1,16 @@
 import React from 'react';
+import "../styles/components.css";
+import { NavLink } from 'react-router-dom';
 
 function Header() {
   
   return (
-    <header style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 20px', backgroundColor: '#222', color: '#fff' }}>
-      <h1>Mon Portfolio</h1>
-      
+    <header>
+      <NavLink to="/">
+        <h1>Mon Portfolio</h1>
+      </NavLink>
       <nav>
-        <button style={{ margin: '0 10px', color: '#fff', textDecoration: 'none', backgroundColor: 'none'}}>
-          skills
-        </button>
+        <button id='linkSkills' href="/skills">skills</button>
       </nav>
     </header>
   );

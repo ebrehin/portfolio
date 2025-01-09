@@ -1,36 +1,84 @@
 :root {
-    /* Variables de couleur */
-    --primary-color: #ffffff;
-    --background-color: #000000;
-    --text-color: #ffffff;
+  /* Variables de couleur */
+  --primary-color: #ffffff;
+  --background-color: #000000;
+  --text-color: #ffffff;
+
+  /* Variables de typographie */
+  --font-primary: system-ui, -apple-system, sans-serif;
+  --font-size-base: 16px;
+  --line-height-base: 1.5;
+
+  /* Variables d'animation */
+  --transition-speed: 0.3s;
+  --transition-timing: ease-out;
+}
   
-    /* Variables de typographie */
-    --font-primary: system-ui, -apple-system, sans-serif;
-    --font-size-base: 16px;
-    --line-height-base: 1.5;
-  
-    /* Variables d'animation */
-    --transition-speed: 0.3s;
-    --transition-timing: ease-out;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  overflow-x: hidden;
+}
+
+/* Conteneur de défilement */
+.scroll-container {
+  min-height: 200vh;
+  position: relative;
+}
+
+/* SkillsPage */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
   }
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  body {
-    font-family: var(--font-primary);
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-base);
-    background-color: var(--background-color);
-    color: var(--text-color);
-    overflow-x: hidden;
-  }
-  
-  /* Classe utilitaire pour le conteneur de défilement */
-  .scroll-container {
-    min-height: 200vh;
-    position: relative;
-  }
+}
+
+div > main {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.animated-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 20px;
+  padding: 0;
+}
+
+.animated-list li {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+/* Animation visible */
+.animated-list li.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animated-list li > div{
+  width: 60%;
+}
+
+.animated-list li > .odd{
+  float: left;
+}
+
+.animated-list li > .even{
+  float: right;
+}

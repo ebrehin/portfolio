@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import { useNavigate } from 'react-router-dom';
 import * as THREE from 'three';
@@ -109,7 +109,7 @@ export default function ThreeScene() {
       return () => {
         mixer.current.removeEventListener('finished', handleFinished);
       };
-    }, [animations]);
+    });
 
     useFrame((state, delta) => {
       if (transitioning.current){
@@ -117,7 +117,7 @@ export default function ThreeScene() {
       }
       else {
         state.camera.lookAt(laptopRef.current.position);
-        state.camera.position.lerp(new THREE.Vector3(6, 2, 0), 0.05);
+        state.camera.position.lerp(new THREE.Vector3(6.5, 2, 0), 0.05);
         state.camera.fov = THREE.MathUtils.lerp(state.camera.fov, 75, 0.05);
       }
 

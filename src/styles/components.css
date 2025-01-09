@@ -6,6 +6,11 @@ header {
   color: #fff; 
 }
 
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
 #linkSkills {
   color: white;
   margin: 0 10px;
