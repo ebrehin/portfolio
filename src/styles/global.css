@@ -37,6 +37,7 @@ body {
   z-index: -1;
   bottom: 4em;
   text-align: center;
+  opacity: 0.8;
 }
 
 /* Conteneur de défilement */
@@ -61,6 +62,10 @@ div > main {
   animation: fadeInUp 0.5s ease-out;
 }
 
+main h1 {
+  margin: 0.5em 0 2em 0;
+}
+
 .animated-list {
   display: flex;
   flex-direction: column;
@@ -81,14 +86,34 @@ div > main {
   transform: translateY(0);
 }
 
-.animated-list li > div{
+.animated-list .odd, .animated-list .even {
   width: 60%;
+  display: flex;
+  justify-content: center;
 }
 
-.animated-list li > .odd{
+.card {
+  display: flex;
+  justify-content: space-between;
+  border: solid #4f4f4f 1px;
+  border-radius: 20px;
+  width: 70%;
+  margin: 1em 0;
+  padding: 1em;
+  background-color: #222;
+}
+
+.animated-list li > .odd {
   float: left;
 }
 
 .animated-list li > .even{
   float: right;
+}
+
+.card > section{
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-right: 1em;
 }

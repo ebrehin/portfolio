@@ -156,7 +156,7 @@ export default function ThreeScene() {
           <NavLink to="/">
             <button className="links">Accueil</button>
           </NavLink>
-          <button className="links" onClick={() => handleNavigation('/skills')}>skills</button>
+          <button className="links" onClick={() => handleNavigation('/skills')}>Compétences</button>
         </nav>
       </header>
       <Canvas>

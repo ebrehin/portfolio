@@ -11,44 +11,38 @@ function SkillsPage() {
   const listItems = [
     {
       class: "odd",
-      title: "Titre 1",
-      text: "Ceci est le paragraphe pour l'élément 1.",
+      title: "Réaliser un développement d'application",
+      text: "Pour un projet lors de ma seconde année de BUT Informatique, j'ai réalisé, dans une équipe de 7 personnes, une application pour un client fictif. Design, gestion des données, front end, et back end, ce projet m'a offert de l'expérience dans de nombreux domaines.",
       image: "https://via.placeholder.com/150", // URL d'une image
     },
     {
       class: "even",
-      title: "Titre 2",
-      text: "Ceci est le paragraphe pour l'élément 2.",
+      title: "Optimiser des applications informatiques",
+      text: "Dans le cadre du projet de seconde année de BUT Informatique, j'ai appris que l'optmisiation des requêtes réalisées sur notre base de données était aussi cruciale que l'optimisation du reste de l'application, qui comprenait l'utilisation de php, de css, et de javascript.",
       image: "https://via.placeholder.com/150",
     },
     {
       class: "odd",
-      title: "Titre 3",
-      text: "Ceci est le paragraphe pour l'élément 3.",
+      title: "Administrer des systèmes informatiques communicants complexes",
+      text: "Dans le cadre du projet de seconde année de BUT Informatique, j'ai réalisé une API, en langage C, capable de communiquer avec l'application que nous avons développé, moi, et mon équipe.",
       image: "https://via.placeholder.com/150",
     },
     {
       class: "even",
-      title: "Titre 4",
-      text: "Ceci est le paragraphe pour l'élément 4.",
+      title: "Gérer des données de l'information",
+      text: "Durant la troisième année de BUT Informatique, j'ai travaillé avec une équipe de 7 personnes. Accompagné de 2 personnes du groupe, j'ai réalisé un nettoyage de données avant de les intégrer à l'existant, réalisé par le reste de mon équipe.",
       image: "https://via.placeholder.com/150",
     },
     {
       class: "odd",
-      title: "Titre 5",
-      text: "Ceci est le paragraphe pour l'élément 5.",
+      title: "Conduite de projet",
+      text: "Lors du projet de troisième année de BUT Informatique, j'ai pu, avec mon équipe, faire le design d'une base de donnée pour gérer la recommendations de livres. J'ai également rédigé un questionnaire pour obtenir des données pour notre application de recommendation.",
       image: "https://via.placeholder.com/150",
     },
     {
       class: "even",
-      title: "Titre 6",
-      text: "Ceci est le paragraphe pour l'élément 6.",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      class: "odd",
-      title: "Titre 7",
-      text: "Ceci est le paragraphe pour l'élément 7.",
+      title: "Travailler dans une équipe informatique",
+      text: "J'ai réalisé un stage lors de ma seconde année de BUT Informatique à Thalès, à Brest. J'ai, par la suite, eu le chance de travailler à nouveau dans cette entreprise dans le cadre de mon alternance en trosième année de BUT Informatique. Cette expérience m'a appris le travail d'équipe en entreprise.",
       image: "https://via.placeholder.com/150",
     }
   ];
@@ -91,9 +85,13 @@ function SkillsPage() {
           {listItems.map((item, index) => (
             <li key={index} id={`list-item-${index}`} className={visibleItems.includes(index) ? 'visible' : ''}>
               <div className={item.class}>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-                <img src={item.image} alt={item.title} />
+                <div className='card'>
+                  <section>
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                  </section>
+                  <img src={item.image} alt={item.title} />
+                </div>
               </div>
             </li>
           ))}
