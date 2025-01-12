@@ -6,11 +6,11 @@ function Header() {
   
   return (
     <header>
-      <NavLink to="/">
+      <a href="/">
         <h1>Ethan Bréhin</h1>
-      </NavLink>
+      </a>
       <nav>
-        <NavLink to="/" className='links'>Accueil</NavLink>
+        <a class='links' href="/">Accueil</a>
         <button class='links' href="/skills">Compétences</button>
       </nav>
     </header>
