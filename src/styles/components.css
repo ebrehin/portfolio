@@ -8,6 +8,16 @@ header {
 
 header nav{
   display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+header nav .links{
+  font-size: 16px;
+}
+
+header nav .links:hover{
+  cursor: pointer;
 }
 
 a {
@@ -122,10 +132,9 @@ a {
   opacity: 0.8;
 }
 
-.links {
+.footer .links {
   display: flex;
   gap: 1rem;
-  margin-top: 0.5rem;
 }
 
 .link {

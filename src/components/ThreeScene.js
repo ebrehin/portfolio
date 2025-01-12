@@ -153,9 +153,7 @@ export default function ThreeScene() {
           <h1>Ethan Bréhin</h1>
         </NavLink>
         <nav>
-          <NavLink to="/">
-            <button className="links">Accueil</button>
-          </NavLink>
+          <NavLink to="/" className='links'>Accueil</NavLink>
           <button className="links" onClick={() => handleNavigation('/skills')}>Compétences</button>
         </nav>
       </header>

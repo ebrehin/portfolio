@@ -10,9 +10,7 @@ function Header() {
         <h1>Ethan Bréhin</h1>
       </NavLink>
       <nav>
-        <NavLink to="/">
-          <button class="links">Accueil</button>
-        </NavLink>
+        <NavLink to="/" className='links'>Accueil</NavLink>
         <button class='links' href="/skills">Compétences</button>
       </nav>
     </header>
