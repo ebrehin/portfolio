@@ -88,7 +88,7 @@ function SkillsPage() {
               <div className={item.class}>
                 <div className='card'>
                   <section>
-                    <h3>{`erreur image - ${item.title}`}</h3>
+                    <h3>{item.title}</h3>
                     <p>{item.text}</p>
                   </section>
                   <img src={item.image} alt={`erreur image - \n${item.title}`} />
